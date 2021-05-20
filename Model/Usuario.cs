@@ -16,5 +16,10 @@ namespace SistemaDeEmprestimos.Model
             Nome = nome;
             Senha = senha;
         }
+
+        private Teste()
+        {
+            //Conteúdo novo
+        }
     }
 }

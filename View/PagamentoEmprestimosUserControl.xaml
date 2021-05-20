@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="SistemaDeEmprestimos.View.PagamentoEmprestimosUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SistemaDeEmprestimos.View"
+             Tag="PagamentoEmprestimosUserControl"
+             xmlns:viewModel="clr-namespace:SistemaDeEmprestimos.ViewModel"
+             xmlns:converter="clr-namespace:SistemaDeEmprestimos.Converter"
+             mc:Ignorable="d" 
+             Background="Wheat" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <UserControl.DataContext>
+        <viewModel:PagamentoEmprestimosViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SistemaDeEmprestimos;component/Themes/DefaultStyleSheet.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converter:EmprestimoConverter x:Key="EmprestimoConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal"
+            Grid.Row="0">
+            <Label Content="Nome do Credor: "
+                Style="{StaticResource LabelStyle}"/>
+            <TextBox Style="{StaticResource TextBoxStyle}"
+                Text="{Binding NomeCredor}"/>
+            <Label Content="Nome do Devedor: "
+                Style="{StaticResource LabelStyle}"
+                Margin="15,0,0,0"/>
+            <TextBox Style="{StaticResource TextBoxStyle}"
+                Text="{Binding NomeDevedor}"/>
+            <Button Content="Procurar"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding ComandoProcurar}"
+                Margin="15,0,0,0"/>
+        </StackPanel>
+        <DataGrid Grid.Row="1"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding ListaDeEmprestimos}"
+            SelectedItem="{Binding EmprestimoSelecionado}"
+            Style="{StaticResource DataGridStyle}">
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Blue"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderBrush" Value="Blue"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true"/>
+                                <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="Blue"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderBrush" Value="Blue"/>
+                        </MultiTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Data do Empréstimo" Width="*" Binding="{Binding Data, Converter={StaticResource EmprestimoConverter}}"/>
+                <DataGridTextColumn Header="Valor Original" Width="*" Binding="{Binding Valor, Converter={StaticResource EmprestimoConverter}}"/>
+                <DataGridTextColumn Header="Valor Corrigido" Width="*" Binding="{Binding ValorCorrigidoAteDataCorrente, Converter={StaticResource EmprestimoConverter}}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal"
+            Grid.Row="2">
+            <Label Content="Senha do Credor: "
+                Style="{StaticResource LabelStyle}"/>
+            <PasswordBox Style="{StaticResource PasswordBoxStyle}"
+                x:Name="passwordBox"
+                PasswordChar="*"
+                PasswordChanged="PasswordBox_PasswordChanged"/>
+            <Button Content="Quitar Empréstimo"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding ComandoQuitarEmprestimo}"
+                Margin="15,0,0,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

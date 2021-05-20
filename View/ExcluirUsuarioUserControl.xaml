@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="SistemaDeEmprestimos.View.ExcluirUsuarioUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SistemaDeEmprestimos.View"
+             Tag="CadastrarUsuarioUserControl"
+             xmlns:viewModel="clr-namespace:SistemaDeEmprestimos.ViewModel"
+             xmlns:converter="clr-namespace:SistemaDeEmprestimos.Converter"
+             mc:Ignorable="d" 
+             Background="Wheat" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <UserControl.DataContext>
+        <viewModel:ExcluirUsuarioViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SistemaDeEmprestimos;component/Themes/DefaultStyleSheet.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Label
+            Content="Nome do usuário: "
+            Style="{StaticResource LabelStyle}"
+            Grid.Row="0"
+            Grid.Column="0"/>
+        <TextBox 
+            Style="{StaticResource TextBoxStyle}"
+            Text="{Binding NomeUsuario}"
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalAlignment="Left"
+            Width="140"/>
+        <Label 
+            Content="Senha do Administrador: "
+            Style="{StaticResource LabelStyle}"
+            Grid.Row="1"
+            Grid.Column="0"/>
+        <PasswordBox 
+            Style="{StaticResource PasswordBoxStyle}"
+            x:Name="senhaAdministradorBox"
+            PasswordChar="*"
+            PasswordChanged="SenhaAdministrador_PasswordChanged"
+            Grid.Row="1"
+            Grid.Column="1"
+            HorizontalAlignment="Left"
+            Width="140"/>
+        <Button 
+            Content="Excluir Usuário"
+            Style="{StaticResource ButtonStyle}"
+            Command="{Binding ComandoExcluirUsuario}"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"/>
+    </Grid>
+</UserControl>
